@@ -1,0 +1,63 @@
+--------------------------------------------------------
+--  File created - Saturday-October-29-2016   
+--------------------------------------------------------
+--------------------------------------------------------
+--  DDL for Table TARIFF
+--------------------------------------------------------
+
+  CREATE TABLE "VIVEK"."TARIFF" 
+   (	"PLAN_ID" NUMBER, 
+	"PLAN_NAME" VARCHAR2(30 BYTE), 
+	"PLAN_ACTIVE" VARCHAR2(20 BYTE), 
+	"PLAN_ACT_DEACT_DATE" TIMESTAMP (6), 
+	"PLAN_ACTIVATION_FEE" NUMBER, 
+	"SECURITY_DEPOSIT" NUMBER, 
+	"MONTHLY_RENTAL" NUMBER, 
+	"FREE_LOCAL" NUMBER, 
+	"FREE_STD" NUMBER, 
+	"FREE_SMS" NUMBER, 
+	"OUT_LOCAL_NETWORK" BINARY_DOUBLE, 
+	"OUT_LOCAL_OUT_NETWORK" BINARY_DOUBLE, 
+	"OUT_STD" BINARY_DOUBLE, 
+	"OUT_ISD" BINARY_DOUBLE, 
+	"ROAMING" BINARY_DOUBLE, 
+	"SMS_COST" BINARY_DOUBLE
+   ) SEGMENT CREATION IMMEDIATE 
+  PCTFREE 10 PCTUSED 40 INITRANS 1 MAXTRANS 255 NOCOMPRESS LOGGING
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1 BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index TARIFF_PK
+--------------------------------------------------------
+
+  CREATE UNIQUE INDEX "VIVEK"."TARIFF_PK" ON "VIVEK"."TARIFF" ("PLAN_ID") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1 BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  Constraints for Table TARIFF
+--------------------------------------------------------
+
+  ALTER TABLE "VIVEK"."TARIFF" ADD CONSTRAINT "TARIFF_PK" PRIMARY KEY ("PLAN_ID")
+  USING INDEX PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1 BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM"  ENABLE;
+--------------------------------------------------------
+--  DDL for Trigger TARIFF_PLAN_ID_TRIGGER
+--------------------------------------------------------
+
+  CREATE OR REPLACE TRIGGER "VIVEK"."TARIFF_PLAN_ID_TRIGGER" 
+   before insert on "TARIFF" 
+   for each row 
+begin  
+   if inserting then 
+      if :NEW."PLAN_ID" is null then 
+         select TARIFF_SEQ.nextval into :NEW."PLAN_ID" from dual; 
+      end if; 
+   end if; 
+end;
+/
+ALTER TRIGGER "VIVEK"."TARIFF_PLAN_ID_TRIGGER" ENABLE;

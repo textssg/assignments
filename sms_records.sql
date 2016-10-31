@@ -1,0 +1,60 @@
+--------------------------------------------------------
+--  File created - Saturday-October-29-2016   
+--------------------------------------------------------
+--------------------------------------------------------
+--  DDL for Table SMS_RECORDS
+--------------------------------------------------------
+
+  CREATE TABLE "VIVEK"."SMS_RECORDS" 
+   (	"SMS_ID" NUMBER, 
+	"CUSTOMER_ID" NUMBER, 
+	"PLAN_NAME" VARCHAR2(30 BYTE), 
+	"PLAN_ID" NUMBER, 
+	"FROM_MOBILE_NUMBER" NUMBER, 
+	"TO_MOBILE_NUMBER" NUMBER, 
+	"DATE_AND_TIME" TIMESTAMP (6), 
+	"TEXT" VARCHAR2(160 BYTE), 
+	"SMS_TYPE" VARCHAR2(30 BYTE)
+   ) SEGMENT CREATION IMMEDIATE 
+  PCTFREE 10 PCTUSED 40 INITRANS 1 MAXTRANS 255 NOCOMPRESS LOGGING
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1 BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index SMS_RECORDS_PK
+--------------------------------------------------------
+
+  CREATE UNIQUE INDEX "VIVEK"."SMS_RECORDS_PK" ON "VIVEK"."SMS_RECORDS" ("SMS_ID") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1 BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  Constraints for Table SMS_RECORDS
+--------------------------------------------------------
+
+  ALTER TABLE "VIVEK"."SMS_RECORDS" ADD CONSTRAINT "SMS_RECORDS_PK" PRIMARY KEY ("SMS_ID")
+  USING INDEX PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1 BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM"  ENABLE;
+--------------------------------------------------------
+--  Ref Constraints for Table SMS_RECORDS
+--------------------------------------------------------
+
+  ALTER TABLE "VIVEK"."SMS_RECORDS" ADD CONSTRAINT "SMS_RECORDS_FK" FOREIGN KEY ("CUSTOMER_ID")
+	  REFERENCES "VIVEK"."CUSTOMER" ("CUSTOMER_ID") ON DELETE CASCADE ENABLE;
+  ALTER TABLE "VIVEK"."SMS_RECORDS" ADD CONSTRAINT "SMS_RECORDS_FK2" FOREIGN KEY ("PLAN_ID")
+	  REFERENCES "VIVEK"."TARIFF" ("PLAN_ID") ENABLE;
+--------------------------------------------------------
+--  DDL for Trigger BI_SMS_RECORDS
+--------------------------------------------------------
+
+  CREATE OR REPLACE TRIGGER "VIVEK"."BI_SMS_RECORDS" 
+  before insert on "SMS_RECORDS"               
+  for each row  
+begin   
+    select "SMS_SEQ_ID".nextval into :NEW.SMS_ID from dual; 
+end;
+/
+ALTER TRIGGER "VIVEK"."BI_SMS_RECORDS" ENABLE;
